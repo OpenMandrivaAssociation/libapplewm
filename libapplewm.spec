@@ -1,8 +1,16 @@
-%define libapplewm %mklibname applewm 7
-Name: libapplewm
+%define name		libapplewm
+%define version		1.0.0
+%define release		%mkrel 4
+
+%define major		7
+%define libname 	%mklibname applewm %major
+%define develname	%mklibname applewm -d
+%define staticname	%mklibname applewm -d -s
+
+Name: %{name}
 Summary: The AppleWM Library
-Version: 1.0.0
-Release: %mkrel 3
+Version: %{version}
+Release: %{release}
 Group: Development/X11
 License: MIT
 URL: http://xorg.freedesktop.org
@@ -21,51 +29,53 @@ with the Mac OS X Aqua user interface when running X11 in a rootless mode.
 
 #-----------------------------------------------------------
 
-%package -n %{libapplewm}
+%package -n %{libname}
 Summary:  The AppleWM Library
 Group: Development/X11
 Conflicts: libxorg-x11 < 7.0
 Provides: %{name} = %{version}
 
-%description -n %{libapplewm}
+%description -n %{libname}
 libapplewm is a simple library designed to interface with the Apple-WM 
 extension. This extension allows X window managers to better interact 
 with the Mac OS X Aqua user interface when running X11 in a rootless mode.
 
 #-----------------------------------------------------------
 
-%package -n %{libapplewm}-devel
+%package -n %{develname}
 Summary: Development files for %{name}
 Group: Development/X11
-Requires: %{libapplewm} = %{version}-%{release}
-Provides: libapplewm-devel = %{version}-%{release}
+Requires: %{libname} = %{version}-%{release}
+Provides: %{name}-devel = %{version}-%{release}
+Obsoletes: %mklibname applewm 7 -d
 Conflicts: libxorg-x11-devel < 7.0
 
-%description -n %{libapplewm}-devel
+%description -n %{develname}
 Development files for %{name}
 
-%files -n %{libapplewm}-devel
+%files -n %{develname}
 %defattr(-,root,root)
-%{_libdir}/libAppleWM.so
-%{_libdir}/libAppleWM.la
+%{_libdir}/*.so
+%{_libdir}/*.la
 %{_libdir}/pkgconfig/applewm.pc
-%{_mandir}/man3/AppleWM.3.bz2
+%{_mandir}/man3/AppleWM.3*
 
 #-----------------------------------------------------------
 
-%package -n %{libapplewm}-static-devel
+%package -n %{staticname}
 Summary: Static development files for %{name}
 Group: Development/X11
-Requires: %{libapplewm}-devel >= %{version}
-Provides: libapplewm-static-devel = %{version}-%{release}
+Requires: %{libname}-devel >= %{version}
+Provides: %{name}-static-devel = %{version}-%{release}
+Obsoletes: %mklibname applewm 7 -d -s
 Conflicts: libxorg-x11-static-devel < 7.0
 
-%description -n %{libapplewm}-static-devel
+%description -n %{staticname}
 Static development files for %{name}
 
-%files -n %{libapplewm}-static-devel
+%files -n %{staticname}
 %defattr(-,root,root)
-%{_libdir}/libAppleWM.a
+%{_libdir}/*.a
 
 #-----------------------------------------------------------
 
@@ -80,18 +90,14 @@ Static development files for %{name}
 
 %install
 rm -rf %{buildroot}
-rm -rf %{buildroot}
 %makeinstall_std
 
 %clean
 rm -rf %{buildroot}
 
-%post -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+%post -n %{libname} -p /sbin/ldconfig
+%postun -n %{libname} -p /sbin/ldconfig
 
-%files -n %{libapplewm}
+%files -n %{libname}
 %defattr(-,root,root)
-%{_libdir}/libAppleWM.so.7
-%{_libdir}/libAppleWM.so.7.0.0
-
-
+%{_libdir}/*.so.%{major}*
