@@ -1,6 +1,6 @@
 %define name		libapplewm
 %define version		1.0.0
-%define release		%mkrel 4
+%define release		%mkrel 5
 
 %define major		7
 %define libname 	%mklibname applewm %major
@@ -65,7 +65,7 @@ Development files for %{name}
 %package -n %{staticname}
 Summary: Static development files for %{name}
 Group: Development/X11
-Requires: %{libname}-devel >= %{version}
+Requires: %{develname} >= %{version}
 Provides: %{name}-static-devel = %{version}-%{release}
 Obsoletes: %mklibname applewm 7 -d -s
 Conflicts: libxorg-x11-static-devel < 7.0
