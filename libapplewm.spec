@@ -1,6 +1,6 @@
 %define name		libapplewm
 %define version		1.0.0
-%define release		%mkrel 6
+%define release		%mkrel 7
 
 %define major		7
 %define libname 	%mklibname applewm %major
