@@ -13,7 +13,7 @@ Version: %{version}
 Release: %{release}
 Group: Development/X11
 License: MIT
-URL: http://xorg.freedesktop.org
+URL: https://xorg.freedesktop.org
 Source0: http://xorg.freedesktop.org/releases/individual/lib/libAppleWM-%{version}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-root
 
